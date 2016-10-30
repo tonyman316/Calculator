@@ -5,6 +5,7 @@
 //  Created by Tony's Mac on 10/23/16.
 //  Copyright © 2016 OceanTech. All rights reserved.
 //
+// Todo: 3pi, dot
 
 import Foundation
 import UIKit
@@ -18,11 +19,13 @@ class CalculatorViewController: UIViewController {
     @IBAction func appendDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         print("digit: \(digit)")
-        if sender.currentTitle! == "π" {
-            display.text = display.text! + "\(M_PI)"    //doesn't work yet
-        }
+        
         if isInTheMidOfTyping {
-            display.text = display.text! + digit
+            if digit == "." && display.text!.range(of: ".") != nil {
+                
+            }else{
+                display.text = display.text! + digit
+            }
         } else {
             display.text = digit
             isInTheMidOfTyping = true
@@ -61,7 +64,9 @@ class CalculatorViewController: UIViewController {
         case "√": performOperation { sqrt($0) }
         case "sin": performOperation { sin($0) }
         case "cos": performOperation { cos($0) }
+        case "tan": performOperation { tan($0) }
         case "C": clearAll()
+        case "π":  displayValue = M_PI; enter()
         //case "+/-" : // negative sign
 
         default: break;
@@ -84,14 +89,8 @@ class CalculatorViewController: UIViewController {
     
     func clearAll(){
         operandStack.removeAll()
-        displayValue = 0
+        display.text = "0"
     }
-    
-    
-    
-    
-    
-    
     
     
     
